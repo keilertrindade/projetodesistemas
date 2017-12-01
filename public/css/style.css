@@ -248,7 +248,7 @@ h6{ font-size: 20px; }
 	right: 50px;
 }
 
-#searchform #s{
+#searchform #{
 	color: #49494b;
 	font-size: 12px;
 	width: 160px;
