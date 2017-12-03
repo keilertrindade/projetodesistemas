@@ -81,7 +81,7 @@
 			<!-- content -->
 			<div id="content">
 				
-    <form class="well form-horizontal" action=" " method="post"  id="contact_form">
+    <div class="well form-horizontal" action=" " method="post"  id="contact_form">
 <fieldset>
 
 <!-- Form Name -->
@@ -210,14 +210,14 @@
 </div>
 </div>
 
-<!-- Text input-->
-
+<!-- Text input-->8
 <div class="form-group">
   <label class="col-md-4 control-label">CEP</label>  
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <input id="cep" placeholder="CEP" class="form-control"  type="text">
+  <input id="cep" placeholder="CEP" class="form-control"  type="text"
+   min="01000000" max="99999999" maxlength="8" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     </div>
 </div>
 </div>
@@ -233,7 +233,7 @@
 </div>
 
 </fieldset>
-</form>										
+</div>										
 				
 			</div>
 			<!-- ENDS content -->
@@ -367,62 +367,92 @@ Modelo de site criado para atividade avaliativa da disciplina Projeto de Sistema
 		
 		<script type="text/javascript">
 			function registro(){
+
 				
-				var email = document.getElementById('email').value;
- 				var senha = document.getElementById('senha').value;
+				 email = document.getElementById('email').value;
+ 				 senha = document.getElementById('senha').value;
+ 				 nome = document.getElementById('nome').value;
+ 				 sobrenome = document.getElementById('sobrenome').value;
+ 				 telefone = document.getElementById('telefone').value;
+ 				 endereço = document.getElementById('endereço').value;
+ 				 cidade = document.getElementById('cidade').value;
+ 				 estado = document.getElementById('estado').value;
+ 				 cep = document.getElementById('cep').value;
 
 
+
+		 		console.log(nome);
+				console.log(sobrenome);
 				console.log(email);
 				console.log(senha);
+				console.log(telefone);
+				console.log(endereço);
+				console.log(cidade);
+				console.log(estado);
+				console.log(cep);
 
- firebase.auth().createUserWithEmailAndPassword(email, senha).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // [START_EXCLUDE]
-        if (errorCode == 'auth/weak-password') {
-          alert('The password is too weak.');
-        } else {
-          alert(errorMessage);
-        }
-        console.log(error);
-        // [END_EXCLUDE]
-      });
+ firebase.auth().createUserWithEmailAndPassword(email, senha).then(function(user) {
+  firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
+     console.log(error.code);
+     console.log(error.message);
+  });
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  console.log('User did not sign up correctly');
+  console.log(errorCode);
+  console.log(errorMessage);
+});
 
-
-        // [START authwithemail]
-        firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-
-          // [END_EXCLUDE]
-        });
-        // [END authwithemail]
-
-  var user = firebase.auth().currentUser;
-
-
-if (user) {
-  // User is signed in.
-  console.log("Usuário Conectado");
-} else {
-  // No user is signed in.
-  console.log("Usuário Desconectado");
+setTimeout(salvarDados, 3000);
 
 }
-    }
+
+
+function salvarDados(){
+var user = firebase.auth().currentUser;
+
+
+user.updateProfile({
+  displayName: nome,
+  
+}).then(function() {
+  // Update successful.
+}).catch(function(error) {
+  // An error happened.
+});
+
+console.log(user);
+}
+
+
+function initApp(){
+firebase.auth().onAuthStateChanged(function(user) {
+
+
+  if (user) {
+    // User is signed in.
+
+      console.log("Usuário Conectado");
+
+  } else {
+    // No user is signed in.
+      console.log("Usuário Desconectado");
+
+  }
+});
+/*
+firebase.auth().signOut().then(function() {
+  console.log('Signed Out');
+}, function(error) {
+  console.error('Sign Out Error', error);
+});*/
+}
 			
-	/*window.onload = function() {
+	window.onload = function() {
       initApp();
-    }; */
+    }; 
 </script>
 
 

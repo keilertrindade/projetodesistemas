@@ -96,7 +96,7 @@
   <div class="card"></div>
   <div class="card">
     <h1 class="title">Login</h1>
-    <form>
+    <div>
       <div class="input-container">
         <input type="#{type}" id="e-mail" required="required"/>
         <label for="#{label}">E-mail</label>
@@ -111,7 +111,7 @@
         <button id="Loginbutton" onclick="login(this)"><span>Login</span></button>
       </div>
       <div class="footerlogin"><a onclick="logout()">Esqueci minha senha.</a></div>
-    </form>
+    </div>
   </div>
   <div class="card alt">
     <div class="toggle"></div>
@@ -217,16 +217,20 @@
 
 
         // [START authwithemail]
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  .then(function() {
+firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
 
-    return firebase.auth().signInWithEmailAndPassword(email, senha);
-  })
-  .catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
+          // [END_EXCLUDE]
+        });
 
         // [END authwithemail]
      }
@@ -243,7 +247,7 @@ firebase.auth().signOut().then(function() {
 
 
 
-  function initApp(){
+ function initApp(){
 
 firebase.auth().onAuthStateChanged(function(user) {
 
