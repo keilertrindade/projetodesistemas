@@ -311,21 +311,22 @@ body {
   -webkit-transform: scale(10);
   transform: scale(10);
 }
-.card .footer {
+.card .footerlogin {
   margin: 40px 0 0;
-  color: #e1bf00;
+  color: #bababa;
   font-size: 24px;
   font-weight: 300;
   text-align: center;
 }
-.card .footer a {
+.card .footerlogin a {
   color: inherit;
   text-decoration: none;
   -webkit-transition: .3s ease;
   transition: .3s ease;
 }
-.card .footer a:hover {
-  color: #bababa;
+.card .footerlogin a:hover {
+  color: #e1bf00;
+  cursor: pointer;
 }
 .card.alt {
   position: absolute;
@@ -358,6 +359,8 @@ body {
   text-align: center;
   cursor: pointer;
 }
+
+
 .card.alt .toggle:before {
   content: '\f040';
   display: inline-block;
