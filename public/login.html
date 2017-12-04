@@ -11,9 +11,6 @@
 		<link rel='stylesheet' href='css/login.css'>
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="css/social-icons.css" type="text/css" media="screen" />
-		<!--[if IE 8]>
-			<link rel="stylesheet" type="text/css" media="screen" href="/css/ie8-hacks.css" />
-		<![endif]-->
 		<!-- ENDS CSS -->	
 
 		<!-- GOOGLE FONTS -->
@@ -56,7 +53,6 @@
 							<li><a href="features-toggle.html"><span> Objetivos</span></a></li>
 						</ul>
 					</li>
-					<li><a href="blog.html">ARTIGOS</a></li>
 					<li><a href="portfolio.html">PORTFOLIO</a></li>
 					<li><a href="gallery.html">ALUNO</a>
 						<ul>
@@ -254,17 +250,18 @@ firebase.auth().onAuthStateChanged(function(user) {
 
   if (user) {
     // User is signed in.
-      console.log("Usuário Conectado");
+    console.log("Usuário Conectado");
+	location.href="areaaluno.html"
 
   } else {
     // No user is signed in.
       console.log("Usuário Desconectado");
 
+
   }
 });
 
 }
-
     window.onload = function() {
       initApp();
     }

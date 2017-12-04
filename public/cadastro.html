@@ -54,9 +54,8 @@
 							<li><a href="features-toggle.html"><span> Objetivos</span></a></li>
 						</ul>
 					</li>
-					<li><a href="blog.html">ARTIGOS</a></li>
 					<li><a href="portfolio.html">PORTFOLIO</a></li>
-					<li><a href="gallery.html">ALUNO</a>
+					<li><a href="">ALUNO</a>
 						<ul>
 							<li><a href="login.html"><span> Entrar </span></a></li>
 							<li><a href="cadastro.html"><span> Cadastre-se </span></a></li>
@@ -85,7 +84,7 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Cadastre-se Hoje!</legend>
+<legend>Cadastre-se Agora!</legend>
 
 <!-- Text input-->
 
@@ -366,21 +365,19 @@ Modelo de site criado para atividade avaliativa da disciplina Projeto de Sistema
 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		
-		<script type="text/javascript">
-			
+<script type="text/javascript">
 
+function registro(){
 
-			function registro(){
-
-				 var email = document.getElementById('email').value;
+				  email = document.getElementById('email').value;
  				 var senha = document.getElementById('senha').value;
- 				 var nome = document.getElementById('nome').value;
- 				 var sobrenome = document.getElementById('sobrenome').value;
- 				 var telefone = document.getElementById('telefone').value;
- 				 var endereço = document.getElementById('endereço').value;
- 				 var cidade = document.getElementById('cidade').value;
- 				 var estado = document.getElementById('estado').value;
- 				 var cep = document.getElementById('cep').value;
+ 				  nome = document.getElementById('nome').value;
+ 				  sobrenome = document.getElementById('sobrenome').value;
+ 				  telefone = document.getElementById('telefone').value;
+ 				  endereço = document.getElementById('endereço').value;
+ 				  cidade = document.getElementById('cidade').value;
+ 				  estado = document.getElementById('estado').value;
+ 				  cep = document.getElementById('cep').value;
 
 		 		console.log(nome);
 				console.log(sobrenome);
@@ -406,12 +403,12 @@ Modelo de site criado para atividade avaliativa da disciplina Projeto de Sistema
   console.log(errorMessage);
 });
 
-setTimeout(salvarDados(nome, email), 3000);
+setTimeout(salvarDados(nome, email, sobrenome, telefone, endereço, cidade, estado, cep), 3000);
 
 }
 
 
-function salvarDados(nome, email){
+function salvarDados(nome, email, sobrenome, telefone, endereço, cidade, estado, cep){
 var user = firebase.auth().currentUser;
 
 
@@ -424,32 +421,49 @@ user.updateProfile({
   // An error happened.
 });
 
-saveProfile(nome, email);
+saveProfile(nome, email, sobrenome, telefone, endereço, cidade, estado, cep);
 }
 
-  function saveProfile(nome, email){
+ function saveProfile(user){
 
-	var db = firebase.database();
-	var user = firebase.auth().currentUser;
+	//var db = firebase.database();
+	//var user = firebase.auth().currentUser;
 
 	firebase.database().ref('users/' + user.uid).set({
     nome: nome,
     email: email,
+    sobrenome: sobrenome,
+    telefone: telefone,
+    endereço: endereço,
+    cidade: cidade,
+    estado: estado,
+    cep: cep,
   });
 
+//logout();
+//location.href="areaaluno.html"
+
+//setTimeout(loginCompleto(), 3000);
+}
+
+function loginCompleto(){
+	location.href="areaaluno.html"
 }
 
 
 
 
 function initApp(){
+
 firebase.auth().onAuthStateChanged(function(user) {
 
 
   if (user) {
     // User is signed in.
 
+      setTimeout(saveProfile(user), 3000);
       console.log("Usuário Conectado");
+      //location.href="areaaluno.html"
 
   } else {
     // No user is signed in.
@@ -457,25 +471,25 @@ firebase.auth().onAuthStateChanged(function(user) {
 
   }
 });
-/*
-firebase.auth().signOut().then(function() {
+
+}
+
+function logout(){
+	  firebase.auth().signOut().then(function() {
   console.log('Signed Out');
+  
 }, function(error) {
   console.error('Sign Out Error', error);
-});*/
+});
 }
-			
-	window.onload = function() {
+
+window.onload = function() {
+
+	  logout();
       initApp();
     }
 
-
-
 </script>
-<script type="text/javascript">
-	
 
-
-</script>
 
 
