@@ -7,6 +7,7 @@
 		<!-- CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="css/social-icons.css" type="text/css" media="screen" />
+		<link rel="shortcut icon" href="img/ico2.png" type="image/x-icon"/>
 			<!-- ENDS CSS -->	
 
 		<!-- GOOGLE FONTS -->
@@ -139,7 +140,7 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-  <input id="telefone" placeholder="(99) 9 9999-9999" class="form-control" type="text" maxlength="16">
+  <input id="telefone" placeholder="(99) 9 9999-9999" class="form-control" type="text" maxlength="16" onkeypress='return apenasNumero(event)'>
     </div>
   </div>
 </div>
@@ -151,7 +152,7 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <input id="endereço" placeholder="Endereço" class="form-control" type="text">
+  <input id="endereço" placeholder="Endereço" class="form-control" type="text" >
     </div>
   </div>
 </div>
@@ -163,7 +164,7 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <input id="cidade" placeholder="Cidade" class="form-control"  type="text">
+  <input id="cidade" placeholder="Cidade" class="form-control"  type="text" >
     </div>
   </div>
 </div>
@@ -176,7 +177,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
     <select id="estado" class="form-control selectpicker" >
-      <option value=" " >Selecione o Estado</option>
+      <option value="">Selecione o Estado</option>
     <option value="AC">Acre</option>
   <option value="AL">Alagoas</option>
   <option value="AP">Amapá</option>
@@ -216,7 +217,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
   <input id="cep" placeholder="CEP" class="form-control"  type="text"
-   min="01000000" max="99999999" maxlength="8" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+   maxlength="8" onkeypress='return apenasNumero(event)'>
     </div>
 </div>
 </div>
@@ -370,7 +371,7 @@ Modelo de site criado para atividade avaliativa da disciplina Projeto de Sistema
 function registro(){
 
 				  email = document.getElementById('email').value;
- 				 var senha = document.getElementById('senha').value;
+ 				  senha = document.getElementById('senha').value;
  				  nome = document.getElementById('nome').value;
  				  sobrenome = document.getElementById('sobrenome').value;
  				  telefone = document.getElementById('telefone').value;
@@ -378,6 +379,45 @@ function registro(){
  				  cidade = document.getElementById('cidade').value;
  				  estado = document.getElementById('estado').value;
  				  cep = document.getElementById('cep').value;
+
+
+if (nome.length == 0){
+alert("Por Favor insira seu nome!");
+document.getElementById('nome').focus();
+}
+else if (sobrenome.length == 0){
+alert("Por Favor insira seu sobrenome!");
+document.getElementById('sobrenome').focus();
+}
+else if (email.length == 0){
+alert("Por Favor preencha o Email corretamente!");
+document.getElementById('email').focus();
+}
+else if (senha.length < 6){
+alert("Por Favor preencha a Senha com no minimo 6 caracteres!");
+document.getElementById('senha').focus();
+}
+else if (telefone.length == 0){
+alert("Por Favor insira seu telefone!");
+document.getElementById('telefone').focus();
+}
+else if (endereço.length == 0){
+alert("Por Favor insira seu endereço!");
+document.getElementById('endereço').focus();
+}
+else if (cidade.length == 0){
+alert("Por Favor insira seu cidade!");
+document.getElementById('cidade').focus();
+}
+else if (estado.length == 0){
+alert("Por Favor selecione seu estado!");
+document.getElementById('estado').focus();
+}
+else if (cep.length < 8){
+alert("Por Favor insira seu CEP corretamente!");
+document.getElementById('cep').focus();
+}
+else{
 
  firebase.auth().createUserWithEmailAndPassword(email, senha).then(function(user) {
   firebase.auth().signInWithEmailAndPassword(email, senha).then(function(user) {
@@ -405,7 +445,7 @@ function registro(){
   console.log(errorCode);
   console.log(errorMessage);
 });
-
+}
 
 }
 
@@ -420,6 +460,18 @@ function getConfirmation(){
          return false;
         }
 }
+
+function apenasNumero(e){
+	//return event.charCode >= 48 && event.charCode <= 57
+	var tecla=(window.event)?event.keyCode:e.which;
+	if((tecla>47 && tecla<58)) return true;
+    else if (tecla==8 || tecla==0){
+    	return true;
+    } 
+	else{
+		return false;
+	}  
+    }
 
 window.onload = function() {
     }
