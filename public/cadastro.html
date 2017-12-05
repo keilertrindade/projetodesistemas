@@ -379,20 +379,23 @@ function registro(){
  				  estado = document.getElementById('estado').value;
  				  cep = document.getElementById('cep').value;
 
-		 		console.log(nome);
-				console.log(sobrenome);
-				console.log(email);
-				console.log(senha);
-				console.log(telefone);
-				console.log(endereço);
-				console.log(cidade);
-				console.log(estado);
-				console.log(cep);
-
  firebase.auth().createUserWithEmailAndPassword(email, senha).then(function(user) {
-  firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
-     console.log(error.code);
-     console.log(error.message);
+  firebase.auth().signInWithEmailAndPassword(email, senha).then(function(user) {
+     console.log("Usuário Logado Poarr!!!");
+
+    firebase.database().ref('users/' + user.uid).set({
+	nome: nome,
+    email: email,
+    sobrenome: sobrenome,
+    telefone: telefone,
+    endereço: endereço,
+    cidade: cidade,
+    estado: estado,
+    cep: cep,
+  }).then(function() {
+ getConfirmation();
+});
+
   });
 }).catch(function(error) {
   // Handle Errors here.
@@ -403,90 +406,22 @@ function registro(){
   console.log(errorMessage);
 });
 
-setTimeout(salvarDados(nome, email, sobrenome, telefone, endereço, cidade, estado, cep), 3000);
 
 }
 
-
-function salvarDados(nome, email, sobrenome, telefone, endereço, cidade, estado, cep){
-var user = firebase.auth().currentUser;
-
-
-user.updateProfile({
-  displayName: nome,
-  
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
-
-saveProfile(nome, email, sobrenome, telefone, endereço, cidade, estado, cep);
-}
-
- function saveProfile(user){
-
-	//var db = firebase.database();
-	//var user = firebase.auth().currentUser;
-
-	firebase.database().ref('users/' + user.uid).set({
-    nome: nome,
-    email: email,
-    sobrenome: sobrenome,
-    telefone: telefone,
-    endereço: endereço,
-    cidade: cidade,
-    estado: estado,
-    cep: cep,
-  });
-
-//logout();
-//location.href="areaaluno.html"
-
-//setTimeout(loginCompleto(), 3000);
-}
-
-function loginCompleto(){
-	location.href="areaaluno.html"
-}
-
-
-
-
-function initApp(){
-
-firebase.auth().onAuthStateChanged(function(user) {
-
-
-  if (user) {
-    // User is signed in.
-
-      setTimeout(saveProfile(user), 3000);
-      console.log("Usuário Conectado");
-      //location.href="areaaluno.html"
-
-  } else {
-    // No user is signed in.
-      console.log("Usuário Desconectado");
-
-  }
-});
-
-}
-
-function logout(){
-	  firebase.auth().signOut().then(function() {
-  console.log('Signed Out');
-  
-}, function(error) {
-  console.error('Sign Out Error', error);
-});
+function getConfirmation(){
+     var retVal = confirm("Cadastro Realizado com Sucesso! \n\nPressione 'OK' para ser redirecionado!");
+     if(retVal == true){
+       	location.href="areaaluno.html"
+        return true;
+        }
+     else{
+         location.href="index.html" 
+         return false;
+        }
 }
 
 window.onload = function() {
-
-	  logout();
-      initApp();
     }
 
 </script>

@@ -203,14 +203,11 @@
 
 <script type="text/javascript">
 
+
      function login(x){
 
         var email = document.getElementById("e-mail").value;
         var senha = document.getElementById("senha").value;
-
-        console.log(email);
-        console.log(senha);
-
 
         // [START authwithemail]
 firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
@@ -219,9 +216,9 @@ firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
           var errorMessage = error.message;
           // [START_EXCLUDE]
           if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
+            alert('Senha Inválida.');
           } else {
-            alert(errorMessage);
+            alert("Falha ao Realizar Login! Verifique seu E-mail");
           }
           console.log(error);
 

@@ -19,6 +19,12 @@
 		<!-- SKIN -->
 		<link rel="stylesheet" href="skins/plastic/style.css" type="text/css" media="screen" />
 
+<style>
+#main{
+	display:none;
+	}
+</style>
+
 	</head>
 	
 	<body class="">
@@ -330,6 +336,7 @@ Modelo de site criado para atividade avaliativa da disciplina Projeto de Sistema
 		<!-- ENDS Fancybox -->
 
 		<script type="text/javascript">
+
 			
 function carregarDados(user){
 //nome, email, sobrenome, telefone, endereço, cidade, estado, cep
@@ -344,16 +351,6 @@ function carregarDados(user){
 
 				});
 
-
-
-/*var ref = firebase.database().ref('users/'+'GkorswQRfgMfHDSvQ4qp2ZavH7V2');
-
-ref.on("value", function(snapshot) {
-   console.log(snapshot.val() );
-}, function (error) {
-   console.log("Error: " + error.code) ;
-}); */
-
 }
 
 function verificaLogin(){
@@ -363,6 +360,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
   if (user) {
     // User is signed in.
+    document.getElementById("main").style.display = "block";
     carregarDados(user);
 	//location.href="areaaluno.html"
 
@@ -384,8 +382,7 @@ firebase.auth().signOut().then(function() {
 });
 
 }
-
-			window.onload = function() {
+	window.onload = function() {
       			verificaLogin();
     }
 
